@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    container_name: postgres_ve-${BUILD_NUMBER:-latest}
+    image: postgres
+    volumes:
+     - pgdata:/var/lib/postgresql/data
+  backend:
+    build:
+      context: .
+      dockerfile: ./django/Dockerfile
+    command: python3 manage.py runserver 0.0.0.0:8000
+    container_name: django_ve-${BUILD_NUMBER:-latest}
+    volumes:
+      - ./django:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  web:
+    build:
+      context: .
+      dockerfile: ./vue/Dockerfile
+    command: npm run serve
+    container_name: vue_ve-${BUILD_NUMBER:-latest}
+    volumes:
+      - ./vue:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
