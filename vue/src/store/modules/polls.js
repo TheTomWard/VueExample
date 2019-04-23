@@ -30,8 +30,9 @@ const actions = {
         })
     },
     addPoll ({ commit }, payload) {
+        console.log(payload.data);
         axios.post('http://localhost:8000/questions/', payload).then((response) => {
-            commit('addPoll', response.data);
+            commit('addPoll', response);
         })
     },
     removePoll ({ commit }, id) {

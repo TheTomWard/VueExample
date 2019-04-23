@@ -10,7 +10,7 @@
                         <div class="title">Question:</div>
                         <input type="text" placeholder="Question..." v-model="question" name="question">
                         <p/>
-                        <div v-for="(data, index) in choices" :key="index">
+                        <div v-for="(data, index) in localChoices" :key="index">
                             <div>Choice {{index + 1}}: </div><input type="text" placeholder="Choice..." v-model="data.choice">
                             <button type="button" @click="deleteChoice(index)">Delete</button>
                         </div>
